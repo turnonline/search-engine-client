@@ -1,0 +1,10 @@
+steps:
+  - name: gcr.io/cloud-builders/git
+    args: ['clone', 'https://github.com/turnonline/${REPO_NAME}.git']
+  - name: gcr.io/cloud-builders/mvn
+    entrypoint: 'mvn'
+    args: ['resources:resources']
+    env:
+      - 'ENDPOINTS_SERVICE_NAME=${_ENDPOINTS_SERVICE_DOMAIN}'
+  - name: gcr.io/cloud-builders/gcloud
+    args: ['endpoints','services','deploy','target/classes/swagger2.json']

@@ -1,2 +1,2 @@
 # search-engine-client
-TurnOnline.biz Ecosystem Search Engine REST API Java client
+TurnOnline.biz Ecosystem Search Engine REST API Java Client

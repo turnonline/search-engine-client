@@ -1,0 +1,1316 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "TurnOnline.biz Ecosystem: Search Engine for Ecosystem related documents",
+        "version": "1.0",
+        "title": "Search Engine"
+    },
+    "host": "${env.ENDPOINTS_SERVICE_NAME}",
+    "basePath": "/api/search",
+    "tags": [
+        {
+            "name": "Account Search"
+        },
+        {
+            "name": "Product Search"
+        },
+        {
+            "name": "Invoice Search"
+        },
+        {
+            "name": "Order Search"
+        },
+        {
+            "name": "Contact Search"
+        },
+        {
+            "name": "Global Search"
+        },
+        {
+            "name": "Common"
+        }
+    ],
+    "schemes": [
+        "https"
+    ],
+    "paths": {
+        "/v1/accounts": {
+            "get": {
+                "tags": [
+                    "Account Search"
+                ],
+                "summary": "Account document search",
+                "description": "Return all account documents from index for specified query",
+                "operationId": "SearchAccounts",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Search query pattern",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "The position of the first result to retrieve, numbered from 0",
+                        "required": false,
+                        "type": "integer",
+                        "default": 0,
+                        "format": "int32"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The maximum number of results to retrieve",
+                        "required": false,
+                        "type": "integer",
+                        "default": 10,
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The list of accounts matching given criteria",
+                        "schema": {
+                            "$ref": "#/definitions/AccountCollection"
+                        }
+                    },
+                    "401": {
+                        "description": "The error when the authentication credential fails.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "It’s a failure of the server. The client can repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "503": {
+                        "description": "The service is unavailable or the server has timed out processing of the request. The client may repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "firebase-a9a2a51a": []
+                    }
+                ]
+            }
+        },
+        "/v1/accounts/{accountId}": {
+            "get": {
+                "tags": [
+                    "Account Search"
+                ],
+                "summary": "Return account document from index",
+                "description": "Return account document from index for given id. Only accounts with company profile will be indexed by default.",
+                "operationId": "GetAccount",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "accountId",
+                        "in": "path",
+                        "description": "Identifier of account document",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Account document response for given ID",
+                        "schema": {
+                            "$ref": "#/definitions/Account"
+                        }
+                    },
+                    "401": {
+                        "description": "The error when the authentication credential fails.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "The error when client tries to retrieve an account that doesn’t exist.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "It’s a failure of the server. The client can repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "503": {
+                        "description": "The service is unavailable or the server has timed out processing of the request. The client may repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "firebase-a9a2a51a": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Account Search"
+                ],
+                "summary": "Delete account document from index",
+                "description": "Deletes specified account document with the supplied ID from the index.",
+                "operationId": "DeleteAccount",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "accountId",
+                        "in": "path",
+                        "description": "Identifier of account document",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "The confirmation, the account document has been removed from index."
+                    },
+                    "401": {
+                        "description": "The error when the authentication credential fails.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "The error when client tries to delete an account that doesn’t exist in index.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "It’s a failure of the server. The client can repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "503": {
+                        "description": "The service is unavailable or the server has timed out processing of the request. The client may repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "firebase-a9a2a51a": []
+                    }
+                ]
+            }
+        },
+        "/v1/contacts": {
+            "get": {
+                "tags": [
+                    "Contact Search"
+                ],
+                "summary": "Contact document search",
+                "description": "Return all contact documents from index for specified query",
+                "operationId": "SearchContacts",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Search query pattern",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "The position of the first result to retrieve, numbered from 0",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The maximum number of results to retrieve",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The list of contacts matching given criteria",
+                        "schema": {
+                            "$ref": "#/definitions/ContactCollection"
+                        }
+                    },
+                    "401": {
+                        "description": "The error when the authentication credential fails.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "It’s a failure of the server. The client can repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "503": {
+                        "description": "The service is unavailable or the server has timed out processing of the request. The client may repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "firebase-a9a2a51a": []
+                    }
+                ]
+            }
+        },
+        "/v1/contacts/{contactId}": {
+            "get": {
+                "tags": [
+                    "Contact Search"
+                ],
+                "summary": "Return the contact document from the index",
+                "description": "Return contact document from index for given id",
+                "operationId": "GetContact",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "contactId",
+                        "in": "path",
+                        "description": "Identifier of contact document",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Contact document response for given ID",
+                        "schema": {
+                            "$ref": "#/definitions/Contact"
+                        }
+                    },
+                    "401": {
+                        "description": "The error when the authentication credential fails.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "The error when client tries to retrieve a contact that doesn’t exist.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "It’s a failure of the server. The client can repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "503": {
+                        "description": "The service is unavailable or the server has timed out processing of the request. The client may repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "firebase-a9a2a51a": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Contact Search"
+                ],
+                "summary": "Delete the contact document from index",
+                "description": "Deletes the contact document with the supplied ID from the index",
+                "operationId": "DeleteContact",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "contactId",
+                        "in": "path",
+                        "description": "Identifier of contact document",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "The confirmation, the contact document has been removed from index."
+                    },
+                    "401": {
+                        "description": "The error when the authentication credential fails.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "The error when client tries to delete a contact that doesn’t exist in index.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "It’s a failure of the server. The client can repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "503": {
+                        "description": "The service is unavailable or the server has timed out processing of the request. The client may repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "firebase-a9a2a51a": []
+                    }
+                ]
+            }
+        },
+        "/v1/global": {
+            "get": {
+                "tags": [
+                    "Global Search"
+                ],
+                "summary": "Global document search",
+                "description": "Return all documents from all indexes for specified query",
+                "operationId": "GlobalSearch",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Search query pattern",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "The position of the first result to retrieve, numbered from 0",
+                        "required": false,
+                        "type": "integer",
+                        "default": 0,
+                        "format": "int32"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The maximum number of results to retrieve",
+                        "required": false,
+                        "type": "integer",
+                        "default": 5,
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The result for specified query",
+                        "schema": {
+                            "$ref": "#/definitions/GlobalCollection"
+                        }
+                    },
+                    "401": {
+                        "description": "The error when the authentication credential fails.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "It’s a failure of the server. The client can repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "503": {
+                        "description": "The service is unavailable or the server has timed out processing of the request. The client may repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "firebase-a9a2a51a": []
+                    }
+                ]
+            }
+        },
+        "/v1/invoices": {
+            "get": {
+                "tags": [
+                    "Invoice Search"
+                ],
+                "summary": "Invoice document search",
+                "description": "Return all invoice documents from index for specified query",
+                "operationId": "SearchInvoices",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Search query pattern",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "The position of the first result to retrieve, numbered from 0",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The maximum number of results to retrieve",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The list of invoices matching given criteria",
+                        "schema": {
+                            "$ref": "#/definitions/InvoiceCollection"
+                        }
+                    },
+                    "401": {
+                        "description": "The error when the authentication credential fails.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "It’s a failure of the server. The client can repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "503": {
+                        "description": "The service is unavailable or the server has timed out processing of the request. The client may repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "firebase-a9a2a51a": []
+                    }
+                ]
+            }
+        },
+        "/v1/invoices/{invoiceId}": {
+            "get": {
+                "tags": [
+                    "Invoice Search"
+                ],
+                "summary": "Return the invoice document from the index",
+                "description": "Return invoice document from index for given id",
+                "operationId": "GetInvoice",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "invoiceId",
+                        "in": "path",
+                        "description": "Identifier of invoice document",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Invoice document response for given ID",
+                        "schema": {
+                            "$ref": "#/definitions/Invoice"
+                        }
+                    },
+                    "401": {
+                        "description": "The error when the authentication credential fails.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "The error when client tries to retrieve an invoice that doesn’t exist.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "It’s a failure of the server. The client can repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "503": {
+                        "description": "The service is unavailable or the server has timed out processing of the request. The client may repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "firebase-a9a2a51a": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Invoice Search"
+                ],
+                "summary": "Delete the invoice document from index",
+                "description": "Deletes the invoice document with the supplied ID from the index",
+                "operationId": "DeleteInvoice",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "invoiceId",
+                        "in": "path",
+                        "description": "Identifier of invoice document",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "The confirmation, the invoice document has been removed from index."
+                    },
+                    "401": {
+                        "description": "The error when the authentication credential fails.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "The error when client tries to delete a invoice that doesn’t exist in index.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "It’s a failure of the server. The client can repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "503": {
+                        "description": "The service is unavailable or the server has timed out processing of the request. The client may repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "firebase-a9a2a51a": []
+                    }
+                ]
+            }
+        },
+        "/v1/orders": {
+            "get": {
+                "tags": [
+                    "Order Search"
+                ],
+                "summary": "Order document search",
+                "description": "Return all order documents from index for specified query",
+                "operationId": "SearchOrders",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Search query pattern",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "The position of the first result to retrieve, numbered from 0",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The maximum number of results to retrieve",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The list of orders matching given criteria",
+                        "schema": {
+                            "$ref": "#/definitions/OrderCollection"
+                        }
+                    },
+                    "401": {
+                        "description": "The error when the authentication credential fails.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "It’s a failure of the server. The client can repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "503": {
+                        "description": "The service is unavailable or the server has timed out processing of the request. The client may repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "firebase-a9a2a51a": []
+                    }
+                ]
+            }
+        },
+        "/v1/orders/{orderId}": {
+            "get": {
+                "tags": [
+                    "Order Search"
+                ],
+                "summary": "Return the order document from the index",
+                "description": "Return order document from index for given id",
+                "operationId": "GetOrder",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "Identifier of order document",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Order document response for given ID",
+                        "schema": {
+                            "$ref": "#/definitions/Order"
+                        }
+                    },
+                    "401": {
+                        "description": "The error when the authentication credential fails.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "The error when client tries to retrieve an order that doesn’t exist.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "It’s a failure of the server. The client can repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "503": {
+                        "description": "The service is unavailable or the server has timed out processing of the request. The client may repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "firebase-a9a2a51a": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Order Search"
+                ],
+                "summary": "Delete the order document from index",
+                "description": "Deletes the order document with the supplied ID from the index",
+                "operationId": "DeleteOrder",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "Identifier of order document",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "The confirmation, the order document has been removed from index."
+                    },
+                    "401": {
+                        "description": "The error when the authentication credential fails.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "The error when client tries to delete a order that doesn’t exist in index.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "It’s a failure of the server. The client can repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "503": {
+                        "description": "The service is unavailable or the server has timed out processing of the request. The client may repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "firebase-a9a2a51a": []
+                    }
+                ]
+            }
+        },
+        "/v1/products": {
+            "get": {
+                "tags": [
+                    "Product Search"
+                ],
+                "summary": "Product document search",
+                "description": "Return all product documents from index for specified query",
+                "operationId": "SearchProducts",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Search query pattern",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "The position of the first result to retrieve, numbered from 0",
+                        "required": false,
+                        "type": "integer",
+                        "default": 0,
+                        "format": "int32"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The maximum number of results to retrieve",
+                        "required": false,
+                        "type": "integer",
+                        "default": 10,
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The list of products matching given criteria",
+                        "schema": {
+                            "$ref": "#/definitions/ProductCollection"
+                        }
+                    },
+                    "401": {
+                        "description": "The error when the authentication credential fails.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "It’s a failure of the server. The client can repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "503": {
+                        "description": "The service is unavailable or the server has timed out processing of the request. The client may repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "firebase-a9a2a51a": []
+                    }
+                ]
+            }
+        },
+        "/v1/products/{productId}": {
+            "get": {
+                "tags": [
+                    "Product Search"
+                ],
+                "summary": "Return the product document from the index",
+                "description": "Return product document from index for given id",
+                "operationId": "GetProduct",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "description": "Identifier of product document",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Product document response for given ID",
+                        "schema": {
+                            "$ref": "#/definitions/Product"
+                        }
+                    },
+                    "401": {
+                        "description": "The error when the authentication credential fails.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "The error when client tries to retrieve a product that doesn’t exist.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "It’s a failure of the server. The client can repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "503": {
+                        "description": "The service is unavailable or the server has timed out processing of the request. The client may repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "firebase-a9a2a51a": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Product Search"
+                ],
+                "summary": "Delete the product document from index",
+                "description": "Deletes the product document with the supplied ID from the index",
+                "operationId": "DeleteProduct",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "description": "Identifier of product document",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "The confirmation, the product document has been removed from index."
+                    },
+                    "401": {
+                        "description": "The error when the authentication credential fails.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "The error when client tries to delete a product that doesn’t exist in index.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "It’s a failure of the server. The client can repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "503": {
+                        "description": "The service is unavailable or the server has timed out processing of the request. The client may repeat the request without modifications at any later time.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "firebase-a9a2a51a": []
+                    }
+                ]
+            }
+        }
+    },
+    "securityDefinitions": {
+        "firebase-a9a2a51a": {
+            "type": "oauth2",
+            "authorizationUrl": "",
+            "flow": "implicit",
+            "x-google-issuer": "https://securetoken.google.com/turn-online-eu",
+            "x-google-jwks_uri": "https://www.googleapis.com/service_accounts/v1/metadata/x509/securetoken@system.gserviceaccount.com",
+            "x-google-audiences": "turn-online-eu"
+        }
+    },
+    "definitions": {
+        "Account": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "The account unique identification."
+                },
+                "email": {
+                    "type": "string",
+                    "description": "E-mail address as the account unique identification."
+                },
+                "businessName": {
+                    "type": "string",
+                    "description": "The company business name."
+                },
+                "companyId": {
+                    "type": "string",
+                    "description": "The company business identification number."
+                },
+                "vatId": {
+                    "type": "string",
+                    "description": "The company value added tax identification number (VAT ID)."
+                },
+                "domain": {
+                    "type": "string",
+                    "description": "The account default domain name, the name that represents an unique domain specification."
+                }
+            }
+        },
+        "AccountCollection": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "description": "Account collection wrapper.",
+                    "items": {
+                        "$ref": "#/definitions/Account"
+                    }
+                }
+            }
+        },
+        "Product": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Id by which document in index will be identified"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Product name"
+                },
+                "snippet": {
+                    "type": "string",
+                    "description": "Short product description"
+                },
+                "link": {
+                    "type": "string",
+                    "description": "Product link by which product is accessible in public part of application"
+                },
+                "imageUrl": {
+                    "type": "string",
+                    "description": "Image detail URL"
+                },
+                "owner": {
+                    "type": "string",
+                    "description": "Product owner"
+                }
+            }
+        },
+        "ProductCollection": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "description": "Product collection wrapper.",
+                    "items": {
+                        "$ref": "#/definitions/Product"
+                    }
+                }
+            }
+        },
+        "Invoice": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Id by which document in index will be identified"
+                },
+                "invoiceNumber": {
+                    "type": "string",
+                    "description": "Invoice number"
+                },
+                "paymentIdentification": {
+                    "type": "string",
+                    "description": "Payment identification, for instance variable symbol"
+                },
+                "companyId": {
+                    "type": "string",
+                    "description": "Customer company id"
+                },
+                "productCodes": {
+                    "type": "array",
+                    "description": "List of product codes",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "year": {
+                    "type": "string",
+                    "description": "Year of the issue date"
+                },
+                "owner": {
+                    "type": "string",
+                    "description": "Invoice owner"
+                }
+            }
+        },
+        "InvoiceCollection": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "description": "Invoice collection wrapper.",
+                    "items": {
+                        "$ref": "#/definitions/Invoice"
+                    }
+                }
+            }
+        },
+        "Order": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Id by which document in index will be identified"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Either business or personal short description of the customer."
+                },
+                "productCodes": {
+                    "type": "array",
+                    "description": "List of product codes",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "companyId": {
+                    "type": "string",
+                    "description": "Customer company id"
+                },
+                "owner": {
+                    "type": "string",
+                    "description": "Order owner"
+                }
+            }
+        },
+        "OrderCollection": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "description": "Order collection wrapper.",
+                    "items": {
+                        "$ref": "#/definitions/Order"
+                    }
+                }
+            }
+        },
+        "Contact": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Id by which document in index will be identified"
+                },
+                "firstName": {
+                    "type": "string",
+                    "description": "First name"
+                },
+                "middleName": {
+                    "type": "string",
+                    "description": "Middle name"
+                },
+                "lastName": {
+                    "type": "string",
+                    "description": "Last name"
+                },
+                "companyId": {
+                    "type": "string",
+                    "description": "Company id"
+                },
+                "businessName": {
+                    "type": "string",
+                    "description": "Business name"
+                },
+                "owner": {
+                    "type": "string",
+                    "description": "Contact owner"
+                }
+            }
+        },
+        "ContactCollection": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "description": "Contact collection wrapper.",
+                    "items": {
+                        "$ref": "#/definitions/Contact"
+                    }
+                }
+            }
+        },
+        "Global": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Id by which document in index will be identified"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Item name"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Item description"
+                },
+                "link": {
+                    "type": "string",
+                    "description": "Link by which item is accessible in public part of application"
+                },
+                "imageUrl": {
+                    "type": "string",
+                    "description": "Item image url"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "Item type",
+                    "enum": [
+                        "PRODUCT",
+                        "CONTACT",
+                        "INVOICE",
+                        "ORDER",
+                        "PAYMENT"
+                    ]
+                }
+            }
+        },
+        "GlobalCollection": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "description": "Global collection wrapper.",
+                    "items": {
+                        "$ref": "#/definitions/Global"
+                    }
+                }
+            }
+        },
+        "Error": {
+            "type": "object",
+            "required": [
+                "code",
+                "message"
+            ],
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The HTTP status code."
+                },
+                "message": {
+                    "type": "string",
+                    "description": "The error message."
+                }
+            }
+        }
+    }
+}
