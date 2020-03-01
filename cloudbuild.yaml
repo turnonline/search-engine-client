@@ -5,6 +5,7 @@ steps:
     entrypoint: 'mvn'
     args: ['resources:resources']
     env:
+      - 'TOKEN_ISSUER=${PROJECT_ID}'
       - 'ENDPOINTS_SERVICE_NAME=${_ENDPOINTS_SERVICE_DOMAIN}'
   - name: gcr.io/cloud-builders/gcloud
     args: ['endpoints','services','deploy','target/classes/swagger2.json']

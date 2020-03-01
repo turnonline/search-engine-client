@@ -1025,9 +1025,9 @@
             "type": "oauth2",
             "authorizationUrl": "",
             "flow": "implicit",
-            "x-google-issuer": "https://securetoken.google.com/turn-online-eu",
+            "x-google-issuer": "https://securetoken.google.com/${env.TOKEN_ISSUER}",
             "x-google-jwks_uri": "https://www.googleapis.com/service_accounts/v1/metadata/x509/securetoken@system.gserviceaccount.com",
-            "x-google-audiences": "turn-online-eu"
+            "x-google-audiences": "${env.TOKEN_ISSUER}"
         }
     },
     "definitions": {
