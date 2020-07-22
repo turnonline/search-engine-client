@@ -14,8 +14,7 @@
   ~ limitations under the License.
   -->
 
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
         <groupId>org.ctoolkit.maven</groupId>
@@ -26,7 +25,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>biz.turnonline.ecosystem</groupId>
     <artifactId>turnonline-search-engine-client</artifactId>
-    <version>0.5-SNAPSHOT</version>
+    <version>0.5</version>
     <name>Search Engine Java Client</name>
     <description>TurnOnline.biz Ecosystem Search Engine REST API Java Client</description>
 
@@ -34,7 +33,7 @@
         <connection>scm:git:[fetch=]git@github.com:turnonline/search-engine-client.git</connection>
         <developerConnection>scm:git:[push=]git@github.com:turnonline/search-engine-client.git</developerConnection>
         <url>https://github.com/turnonline/search-engine-client</url>
-        <tag>HEAD</tag>
+        <tag>turnonline-search-engine-client-0.5</tag>
     </scm>
 
     <issueManagement>
