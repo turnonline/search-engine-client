@@ -100,8 +100,8 @@
     </dependencies>
 
     <properties>
-        <ctoolkit-library-bom.version>12</ctoolkit-library-bom.version>
-        <ctoolkit-rest-facade-api.version>0.28</ctoolkit-rest-facade-api.version>
-        <ctoolkit-rest-facade-adapter.version>0.35</ctoolkit-rest-facade-adapter.version>
+        <ctoolkit-library-bom.version>13</ctoolkit-library-bom.version>
+        <ctoolkit-rest-facade-api.version>0.29</ctoolkit-rest-facade-api.version>
+        <ctoolkit-rest-facade-adapter.version>0.36</ctoolkit-rest-facade-adapter.version>
     </properties>
 </project>
