@@ -1204,6 +1204,11 @@
         "Contact": {
             "type": "object",
             "properties": {
+                "accountId": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "The account unique identification within TurnOnline.biz Ecosystem."
+                },
                 "id": {
                     "type": "string",
                     "description": "Id by which document in index will be identified"
