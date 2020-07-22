@@ -25,7 +25,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>biz.turnonline.ecosystem</groupId>
     <artifactId>turnonline-search-engine-client</artifactId>
-    <version>0.5</version>
+    <version>0.6-SNAPSHOT</version>
     <name>Search Engine Java Client</name>
     <description>TurnOnline.biz Ecosystem Search Engine REST API Java Client</description>
 
@@ -33,7 +33,7 @@
         <connection>scm:git:[fetch=]git@github.com:turnonline/search-engine-client.git</connection>
         <developerConnection>scm:git:[push=]git@github.com:turnonline/search-engine-client.git</developerConnection>
         <url>https://github.com/turnonline/search-engine-client</url>
-        <tag>turnonline-search-engine-client-0.5</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <issueManagement>
